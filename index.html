@@ -92,7 +92,7 @@ function handleNumber(value){
     if(!calc.isInitial){
         newValue = calc.current + value;
     }
-    setCalc({current: newValue, isInitial: false});
+    setCalc({current: newValue, total: calc.total, isInitial: false,preOp:calc.preOp});
 }
 //  const [display, setDisplay] = React.useState('0');
 
@@ -101,7 +101,7 @@ const [calc, setCalc] = React.useState({
     current: '0',
     total: '',
     isInitial: true,
-    preOp: ''
+    preOp: '0'
 });
 
 //handle clear button
@@ -114,27 +114,37 @@ function handleClear(){
     });
 
 }
+// handle an operator when a button is clicked
+function handleOperator(value){
+    const total = doCalculation();
+    setCalc({
+        current: total.toString(),
+        total: total.toString(),
+        isInitial: true, 
+        preOp: value
+    });
+}
 
-//for calculation
+// for calculation function
 function doCalculation(){
-    let total="";
-    switch ("operator"){
+    let total = parseFloat(calc.total);
+    switch(calc.preOp){
         case '*':
-            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+            total *= parseFloat(calc.current); //equivalent to total = tolal * parseFloat(calc.current)
             break;
-         case '/':
-            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+        case '/':
+            total /= parseFloat(calc.current); //equivalent to total = tolal / parseFloat(calc.current)
             break;
-            case '+':
-            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+        case '+':
+            total += parseFloat(calc.current); //equivalent to total = tolal + parseFloat(calc.current)
             break;
-            case '-':
-            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+        case '-':
+            total -= parseFloat(calc.current); //equivalent to total = tolal - parseFloat(calc.current)
             break;
-            default:
+        default:
             total = parseFloat(calc.current)
-           
     }
+    return total;
 }
 
 
@@ -146,22 +156,22 @@ function doCalculation(){
             <CalcButton value="7" onClick={handleNumber}/>
             <CalcButton value="8" onClick={handleNumber}/>
             <CalcButton value="9" onClick={handleNumber}/>
-            <CalcButton className="operator" value="*"/>
+            <CalcButton className="operator" value="*"  onClick={handleOperator}/>
 
             <CalcButton value="4" onClick={handleNumber}/>
             <CalcButton value="5" onClick={handleNumber}/>
             <CalcButton value="6" onClick={handleNumber}/>
-            <CalcButton className="operator" value="/"/>
+            <CalcButton className="operator" value="/"   onClick={handleOperator}/>
 
             <CalcButton value="1" onClick={handleNumber}/>
             <CalcButton value="2" onClick={handleNumber}/>
             <CalcButton value="3" onClick={handleNumber}/>
-            <CalcButton className="operator" value="+"/>
+            <CalcButton className="operator" value="+"  onClick={handleOperator}/>
 
             <CalcButton value="C" onClick={handleClear}/>
             <CalcButton value="0" onClick={handleNumber}/>
-            <CalcButton className="operator" value="="/>
-            <CalcButton className="operator" value="-"/>
+            <CalcButton className="operator" value="="  onClick={handleOperator}/>
+            <CalcButton className="operator" value="-"  onClick={handleOperator}/>
         </div>
     );
 }
