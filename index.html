@@ -83,8 +83,10 @@ function handleNumber(value){
 // parent component
 function Calculator(){
 
+
     // for the onCLick event
 function handleNumber(value){
+
     //alert(value);
     let newValue = value;
     if(!calc.isInitial){
@@ -112,6 +114,31 @@ function handleClear(){
     });
 
 }
+
+//for calculation
+function doCalculation(){
+    let total="";
+    switch ("operator"){
+        case '*':
+            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+            break;
+         case '/':
+            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+            break;
+            case '+':
+            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+            break;
+            case '-':
+            total *= parseFloat (calc.currrent); //equivalent to total = total * parseFloat (calc.current)
+            break;
+            default:
+            total = parseFloat(calc.current)
+           
+    }
+}
+
+
+
     return(
         <div className="calculator">
             <div className="display">{calc.current}</div>
